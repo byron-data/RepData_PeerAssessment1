@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Preamble
 
@@ -32,6 +27,14 @@ names(stepsPerDay) <- c("Date", "totalSteps")
 ## Histogram of the total number of steps taken each day
 
 ```r
+library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.2.4
+```
+
+```r
 qplot(totalSteps,
   data=stepsPerDay,
   geom="histogram",
@@ -41,7 +44,7 @@ qplot(totalSteps,
   geom_vline(aes(xintercept=median(stepsPerDay$totalSteps)), colour="blue", linetype="dashed")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
 
 ## What is mean total number of steps taken per day?
 
@@ -62,9 +65,6 @@ median(stepsPerDay$totalSteps)
 ```
 ## [1] 10395
 ```
-
-mean 9354.23
-median 10395
 
 ## What is the average daily activity pattern?
 
@@ -94,7 +94,7 @@ graph +
     ylab("Average Daily Steps Taken")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -122,7 +122,30 @@ sum(is.na(activity))
 ```
 ## [1] 2304
 ```
-2304
+
+Create a "missing value" copy of the original data
+
+```r
+activityMV <- activity
+```
+
+Assign all missing values with the mean for that 5 minute interval
+
+```r
+activityMV$steps[is.na(activityMV$steps)] <- tapply(activityMV$steps, activityMV$interval, mean, na.rm=TRUE)
+```
+
+Calculate the total number of steps taken each day including the new values
+
+```r
+stepsPerDayMV <- aggregate(activityMV$steps, by=list(activityMV$date), sum, na.rm=TRUE)
+```
+
+Give the data better names
+
+```r
+names(stepsPerDayMV) <- c("Date", "totalSteps")
+```
 
 ### Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
@@ -137,7 +160,7 @@ qplot(totalSteps,
     geom_vline(aes(xintercept=median(stepsPerDayMV$totalSteps)), colour="blue", linetype="dashed")
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png)
 
 
 ```r
@@ -156,10 +179,7 @@ median(stepsPerDayMV$totalSteps)
 ## [1] 10766.19
 ```
 
-mean is 10766
-median is 10766
-
-The mean has changed quite a bit, the median not very much
+The mean has gone up quite a bit, the median not very much, now they have the same value.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -169,7 +189,7 @@ Convert activity date to a properly formatted date type
 activityMV$date <- as.POSIXct(activityMV$date)
 ```
 
-### Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+### Create a new factor variable in the dataset with two levels 'weekday' and 'weekend' indicating whether a given date is a weekday or weekend day.
 
 ```r
 activityMV$week <- ifelse(weekdays(activityMV$date) %in% c("Saturday","Sunday"), "weekend", "weekday")
@@ -200,4 +220,4 @@ ggplot(
     facet_grid(weekday~.)
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-21-1.png)
