@@ -41,8 +41,6 @@ qplot(totalSteps,
   geom_vline(aes(xintercept=median(stepsPerDay$totalSteps)), colour="blue", linetype="dashed")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
-
 ![plot of plot1](figure/plot1.png) 
 
 ## What is mean total number of steps taken per day?
@@ -96,8 +94,6 @@ graph +
     ylab("Average Daily Steps Taken")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
-
 ![plot of plot2](figure/plot2.png) 
 
 ## Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -140,8 +136,6 @@ qplot(totalSteps,
     geom_vline(aes(xintercept=mean(stepsPerDayMV$totalSteps)), colour="red") +
     geom_vline(aes(xintercept=median(stepsPerDayMV$totalSteps)), colour="blue", linetype="dashed")
 ```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
 
 ![plot of plot3](figure/plot3.png) 
 
@@ -205,7 +199,5 @@ ggplot(
     ylab("Number of Steps") +
     facet_grid(weekday~.)
 ```
-
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 
 ![plot of plot4](figure/plot4.png)
