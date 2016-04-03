@@ -43,8 +43,6 @@ qplot(totalSteps,
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
-![plot of plot1](figure/plot1.png) 
-
 ## What is mean total number of steps taken per day?
 
 Calculate and report the mean and median of the total number of steps taken per day
@@ -98,8 +96,6 @@ graph +
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
-![plot of plot2](figure/plot2.png) 
-
 ## Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
@@ -142,8 +138,6 @@ qplot(totalSteps,
 ```
 
 ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
-
-![plot of plot3](figure/plot3.png) 
 
 
 ```r
@@ -207,5 +201,3 @@ ggplot(
 ```
 
 ![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
-
-![plot of plot4](figure/plot4.png)
