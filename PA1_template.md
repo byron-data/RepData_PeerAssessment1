@@ -4,7 +4,10 @@ output:
   html_document:
     keep_md: true
 ---
-# This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
+
+## Preamble
+
+This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
 
 ## Loading and preprocessing the data
@@ -48,7 +51,18 @@ Calculate and report the mean and median of the total number of steps taken per 
 
 ```r
 mean(stepsPerDay$totalSteps)
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median(stepsPerDay$totalSteps)
+```
+
+```
+## [1] 10395
 ```
 
 mean 9354.23
@@ -94,6 +108,10 @@ max_int <- which.max(stepsPerInterval[[2]])
 stepsPerInterval[max_int,]$Group.1
 ```
 
+```
+## [1] 835
+```
+
 The interval with the maximum number of steps is 835
 
 ## Imputing missing values
@@ -103,6 +121,10 @@ The interval with the maximum number of steps is 835
 
 ```r
 sum(is.na(activity))
+```
+
+```
+## [1] 2304
 ```
 2304
 
@@ -126,7 +148,18 @@ qplot(totalSteps,
 
 ```r
 mean(stepsPerDayMV$totalSteps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(stepsPerDayMV$totalSteps)
+```
+
+```
+## [1] 10766.19
 ```
 
 mean is 10766
