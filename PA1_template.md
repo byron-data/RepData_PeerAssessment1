@@ -9,22 +9,26 @@ output:
 
 ## Loading and preprocessing the data
 Data is contained in a comma separated file with header so use read.csv
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 activity <- read.csv("activity.csv", header=TRUE)
 ```
 
 Calculate the total number of steps taken each day
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 stepsPerDay <- aggregate(activity$steps, by=list(activity$date), sum, na.rm=TRUE)
 ```
 
 Give the data better names
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 names(stepsPerDay) <- c("Date", "totalSteps")
 ```
 
 ## Histogram of the total number of steps taken each day
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 qplot(totalSteps,
   data=stepsPerDay,
   geom="histogram",
@@ -34,12 +38,15 @@ qplot(totalSteps,
   geom_vline(aes(xintercept=median(stepsPerDay$totalSteps)), colour="blue", linetype="dashed")
 ```
 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
 ![plot of plot1](figure/plot1.png) 
 
 ## What is mean total number of steps taken per day?
 
 Calculate and report the mean and median of the total number of steps taken per day
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 mean(stepsPerDay$totalSteps)
 median(stepsPerDay$totalSteps)
 ```
@@ -50,17 +57,20 @@ median 10395
 ## What is the average daily activity pattern?
 
 Calculate the average number (mean) of steps taken each interval
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 stepsPerInterval <- aggregate(activity$steps, by=list(activity$interval), mean, na.rm=TRUE)
 ```
 
 Store all the interval values as numeric
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 intervals<-as.numeric(unique(activity$interval))
 ```
 
 Create the time series plot
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 graph <- ggplot(
     stepsPerInterval,
     aes(intervals, stepsPerInterval[[2]]),
@@ -72,11 +82,14 @@ graph +
     ylab("Average Daily Steps Taken")
 ```
 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+
 ![plot of plot2](figure/plot2.png) 
 
 ## Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 max_int <- which.max(stepsPerInterval[[2]])
 stepsPerInterval[max_int,]$Group.1
 ```
@@ -87,14 +100,16 @@ The interval with the maximum number of steps is 835
 
 ### Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 sum(is.na(activity))
 ```
 2304
 
 ### Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 qplot(totalSteps,
     data=stepsPerDayMV,
     geom="histogram",
@@ -104,9 +119,12 @@ qplot(totalSteps,
     geom_vline(aes(xintercept=median(stepsPerDayMV$totalSteps)), colour="blue", linetype="dashed")
 ```
 
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+
 ![plot of plot3](figure/plot3.png) 
 
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 mean(stepsPerDayMV$totalSteps)
 median(stepsPerDayMV$totalSteps)
 ```
@@ -119,29 +137,34 @@ The mean has changed quite a bit, the median not very much
 ## Are there differences in activity patterns between weekdays and weekends?
 
 Convert activity date to a properly formatted date type
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 activityMV$date <- as.POSIXct(activityMV$date)
 ```
 
 ### Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 activityMV$week <- ifelse(weekdays(activityMV$date) %in% c("Saturday","Sunday"), "weekend", "weekday")
 ```
 
 ### Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 
 Calculate the average number (mean) of steps taken during weekdays and weekends
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 stepsPerInterval <- aggregate(activityMV$steps, by=list(activityMV$week, activityMV$interval), mean, na.rm=TRUE)
 ```
 
 Give the data better names
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 names(stepsPerInterval) = c("weekday", "interval", "mean")
 ```
 
 Create the time series plot
-```{r, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+
+```r
 ggplot(
     stepsPerInterval,
     aes(x=interval, y=mean)) +
@@ -149,5 +172,7 @@ ggplot(
     ylab("Number of Steps") +
     facet_grid(weekday~.)
 ```
+
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 
 ![plot of plot4](figure/plot4.png)
