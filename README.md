@@ -1,3 +1,6 @@
+# Reproducible Research Assignment 1
+Reproducible Research by Johns Hopkins University on Coursera
+
 ## Introduction
 
 It is now possible to collect a large amount of data about personal
